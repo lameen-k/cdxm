@@ -4,18 +4,35 @@ CDXM is a Codex plugin marketplace for small, focused extensions that make every
 
 This repository is the source of truth for the marketplace and the plugins it publishes.
 
+## Use this marketplace in Codex
+
+Install plugins directly from this curated list by pointing Codex at the repository marketplace:
+
+CLI:
+
+```bash
+codex plugin marketplace add lameen-k/cdxm --ref main
+```
+
+Confirm that Codex has registered the source:
+
+```bash
+codex plugin marketplace list
+```
+
+Then restart the ChatGPT desktop app, open the Plugins Directory, choose **CDXM**, and install the plugin you want to use.
+
 ## Available plugins
 
 | Plugin                                          | What it does                                                                                |
 | ----------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | [CDXM Test Plugin](./plugins/cdxm-test-plugin/) | A safe greeting skill that verifies the marketplace is installed and discoverable in Codex. |
 
-## Add CDXM to Codex
+## Try the included test plugin
 
-1. In Codex, add this repository as a plugin marketplace.
-2. Select **CDXM** from your available marketplaces.
-3. Install **CDXM Test Plugin**.
-4. Ask Codex: `Run the CDXM marketplace test.`
+1. Select **CDXM** from the Plugins Directory.
+2. Install **CDXM Test Plugin**.
+3. Ask Codex: `Run the CDXM marketplace test.`
 
 Codex should reply: **“CDXM marketplace test plugin is installed and working.”**
 
