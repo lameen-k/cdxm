@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tester One | JSONPlaceholder Explorer</title>
+  <style>
+    :root { color-scheme: dark; --bg:#0b1020; --panel:#141b31; --line:#2a3559; --text:#eef3ff; --muted:#9aa8ca; --accent:#69d4ff; --danger:#ff8493; }
+    * { box-sizing:border-box; } body { margin:0; min-height:100vh; font:14px/1.45 Inter, ui-sans-serif, system-ui, sans-serif; background:radial-gradient(circle at 10% 0%,#1e3261 0,var(--bg) 40%); color:var(--text); }
+    header { padding:28px max(24px,calc((100vw - 1280px)/2)); border-bottom:1px solid var(--line); }
+    h1 { margin:0; font-size:28px; letter-spacing:-.04em; } header p { margin:6px 0 0; color:var(--muted); }
+    main { max-width:1280px; margin:auto; padding:24px; display:grid; grid-template-columns:240px minmax(0,1fr) minmax(300px,.8fr); gap:16px; }
+    .panel { background:color-mix(in srgb,var(--panel) 94%,transparent); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+    .panel-title { padding:14px 16px; font-weight:700; border-bottom:1px solid var(--line); }
+    nav { padding:8px; display:grid; gap:3px; } button { font:inherit; } .route { width:100%; border:0; border-radius:8px; background:transparent; color:var(--text); cursor:pointer; padding:10px 12px; text-align:left; display:flex; justify-content:space-between; }
+    .route:hover,.route.active { background:#22345d; } .route span { color:var(--muted); font-size:12px; }
+    .toolbar { display:flex; gap:10px; padding:12px 16px; border-bottom:1px solid var(--line); } input { width:100%; background:#0c1327; border:1px solid var(--line); border-radius:8px; color:var(--text); padding:9px 10px; outline:none; } input:focus { border-color:var(--accent); }
+    .status { color:var(--muted); padding:11px 16px 0; font-size:12px; min-height:32px; } .error { color:var(--danger); }
+    #records { padding:12px; display:grid; gap:8px; max-height:calc(100vh - 210px); overflow:auto; }
+    .record { border:1px solid var(--line); background:#0d152b; color:var(--text); border-radius:10px; padding:12px; text-align:left; cursor:pointer; } .record:hover,.record.active { border-color:var(--accent); background:#13203d; }
+    .record strong { display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .record small { color:var(--muted); display:block; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    #detail { margin:0; padding:16px; max-height:calc(100vh - 150px); overflow:auto; color:#c7d7ff; font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace; white-space:pre-wrap; }
+    .empty { color:var(--muted); padding:18px; } footer { max-width:1280px; margin:0 auto; padding:0 24px 24px; color:var(--muted); font-size:12px; }
+    @media (max-width:900px) { main { grid-template-columns:1fr; } #records,#detail { max-height:360px; } nav { grid-template-columns:repeat(3,1fr); } }
+  </style>
+</head>
+<body>
+  <header><h1>Tester One</h1><p>Live, read-only explorer for JSONPlaceholder API resources.</p></header>
+  <main>
+    <aside class="panel"><div class="panel-title">Routes</div><nav id="routes"></nav></aside>
+    <section class="panel"><div class="panel-title">Resources</div><div class="toolbar"><input id="search" type="search" placeholder="Filter loaded records…" aria-label="Filter records"></div><div id="status" class="status"></div><div id="records"></div></section>
+    <section class="panel"><div class="panel-title">Record detail</div><pre id="detail">Choose a record to inspect its complete JSON payload.</pre></section>
+  </main>
+  <footer>Source: jsonplaceholder.typicode.com · Data is fetched in your browser and is never modified.</footer>
+  <script>
+    const api = 'https://jsonplaceholder.typicode.com';
+    const routes = ['posts','comments','albums','photos','todos','users'];
+    const state = { route: 'posts', records: [], selected: null };
+    const routeList = document.querySelector('#routes'), recordsEl = document.querySelector('#records'), detailEl = document.querySelector('#detail'), statusEl = document.querySelector('#status'), searchEl = document.querySelector('#search');
+    const textFor = (item) => [item.id, item.name, item.title, item.email, item.username, item.body, item.completed, item.userId, item.postId].filter(v => v !== undefined).join(' ').toLowerCase();
+    const labelFor = (item) => item.title || item.name || item.email || `Record ${item.id}`;
+    const subtitleFor = (item) => item.body || item.email || item.username || `id: ${item.id}`;
+    function drawRoutes() { routeList.innerHTML = routes.map(route => `<button class="route ${route === state.route ? 'active' : ''}" data-route="${route}">${route}<span>/${route}</span></button>`).join(''); routeList.querySelectorAll('button').forEach(button => button.onclick = () => load(button.dataset.route)); }
+    function drawRecords() { const query = searchEl.value.trim().toLowerCase(); const visible = state.records.filter(item => textFor(item).includes(query)); statusEl.textContent = `${visible.length} of ${state.records.length} ${state.route} loaded`; recordsEl.innerHTML = visible.length ? visible.map(item => `<button class="record ${state.selected?.id === item.id ? 'active' : ''}" data-id="${item.id}"><strong>#${item.id} · ${escapeHtml(labelFor(item))}</strong><small>${escapeHtml(subtitleFor(item))}</small></button>`).join('') : '<div class="empty">No matching records.</div>'; recordsEl.querySelectorAll('.record').forEach(button => button.onclick = () => select(Number(button.dataset.id))); }
+    function escapeHtml(value) { return String(value).replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char])); }
+    function select(id) { state.selected = state.records.find(item => item.id === id); detailEl.textContent = JSON.stringify(state.selected, null, 2); drawRecords(); }
+    async function load(route) { state.route = route; state.records = []; state.selected = null; searchEl.value = ''; detailEl.textContent = 'Loading…'; statusEl.textContent = `Fetching /${route}…`; recordsEl.innerHTML = ''; drawRoutes(); try { const response = await fetch(`${api}/${route}`); if (!response.ok) throw new Error(`Request failed (${response.status})`); state.records = await response.json(); detailEl.textContent = 'Choose a record to inspect its complete JSON payload.'; drawRecords(); } catch (error) { statusEl.innerHTML = `<span class="error">Could not load /${route}: ${escapeHtml(error.message)}</span>`; detailEl.textContent = 'Check your internet connection and try another route.'; } }
+    searchEl.addEventListener('input', drawRecords); drawRoutes(); load(state.route);
+  </script>
+</body>
+</html>

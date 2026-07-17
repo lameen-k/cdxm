@@ -27,6 +27,7 @@ Then restart the ChatGPT desktop app, open the Plugins Directory, choose **CDXM*
 | Plugin                                          | What it does                                                                                |
 | ----------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | [CDXM Test Plugin](./plugins/cdxm-test-plugin/) | A safe greeting skill that verifies the marketplace is installed and discoverable in Codex. |
+| [Tester One](./plugins/tester-one/)             | Opens a live, read-only browser for JSONPlaceholder API resources.                          |
 
 ## Try the included test plugin
 

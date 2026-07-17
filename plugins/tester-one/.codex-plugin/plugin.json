@@ -1,0 +1,22 @@
+{
+  "name": "tester-one",
+  "version": "0.1.0",
+  "description": "Explore JSONPlaceholder API resources in a local interactive browser.",
+  "author": {
+    "name": "CDXM"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Tester One",
+    "shortDescription": "Browse JSONPlaceholder resources in a live local UI.",
+    "longDescription": "Tester One fetches JSONPlaceholder resources and presents them in an interactive local browser with search, route selection, and record details.",
+    "developerName": "CDXM",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Open the JSONPlaceholder resource browser.",
+      "Show the first 10 JSONPlaceholder posts.",
+      "Find JSONPlaceholder todos for user 1."
+    ]
+  }
+}
