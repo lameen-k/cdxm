@@ -1,15 +1,15 @@
 {
   "name": "tester-one",
-  "version": "0.1.0",
-  "description": "Explore JSONPlaceholder API resources in a local interactive browser.",
+  "version": "0.1.0+codex.20260717121650",
+  "description": "Explore JSONPlaceholder API resources with simulated username and password authentication.",
   "author": {
     "name": "CDXM"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Tester One",
-    "shortDescription": "Browse JSONPlaceholder resources in a live local UI.",
-    "longDescription": "Tester One fetches JSONPlaceholder resources and presents them in an interactive local browser with search, route selection, and record details.",
+    "shortDescription": "Browse JSONPlaceholder resources with simulated API credentials.",
+    "longDescription": "Tester One prompts for API credentials, stores them in the invoking project's .env file, and presents JSONPlaceholder resources in an interactive local browser.",
     "developerName": "CDXM",
     "category": "Productivity",
     "capabilities": [],

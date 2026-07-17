@@ -25,15 +25,15 @@
   </style>
 </head>
 <body>
-  <header><h1>Tester One</h1><p>Live, read-only explorer for JSONPlaceholder API resources.</p></header>
+  <header><h1>Tester One</h1><p>Live, read-only explorer for JSONPlaceholder API resources, authenticated through a local proxy.</p></header>
   <main>
     <aside class="panel"><div class="panel-title">Routes</div><nav id="routes"></nav></aside>
     <section class="panel"><div class="panel-title">Resources</div><div class="toolbar"><input id="search" type="search" placeholder="Filter loaded records…" aria-label="Filter records"></div><div id="status" class="status"></div><div id="records"></div></section>
     <section class="panel"><div class="panel-title">Record detail</div><pre id="detail">Choose a record to inspect its complete JSON payload.</pre></section>
   </main>
-  <footer>Source: jsonplaceholder.typicode.com · Data is fetched in your browser and is never modified.</footer>
+  <footer>Source: jsonplaceholder.typicode.com · Requests are authenticated by the local proxy. Credentials never reach this page.</footer>
   <script>
-    const api = 'https://jsonplaceholder.typicode.com';
+    const api = `${window.location.origin}/api`;
     const routes = ['posts','comments','albums','photos','todos','users'];
     const state = { route: 'posts', records: [], selected: null };
     const routeList = document.querySelector('#routes'), recordsEl = document.querySelector('#records'), detailEl = document.querySelector('#detail'), statusEl = document.querySelector('#status'), searchEl = document.querySelector('#search');
