@@ -1,0 +1,20 @@
+{
+  "name": "cdxm-test-plugin",
+  "version": "0.1.0",
+  "description": "A minimal plugin for verifying the CDXM Codex marketplace.",
+  "author": {
+    "name": "CDXM"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Cdxm Test Plugin",
+    "shortDescription": "Verify that the CDXM marketplace is working.",
+    "longDescription": "A small, safe test plugin with a greeting skill for verifying marketplace installation and discovery.",
+    "developerName": "CDXM",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Run the CDXM marketplace test."
+    ]
+  }
+}

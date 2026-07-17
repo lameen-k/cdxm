@@ -1,0 +1,20 @@
+{
+  "name": "cdxm",
+  "interface": {
+    "displayName": "Cdxm"
+  },
+  "plugins": [
+    {
+      "name": "cdxm-test-plugin",
+      "source": {
+        "source": "local",
+        "path": "./plugins/cdxm-test-plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
